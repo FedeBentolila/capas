@@ -2,6 +2,7 @@ import express from "express";
 import { User } from "../config.js";
 import { ensureLoggedIn } from "connect-ensure-login";
 import passport from "passport";
+import { createTransport } from "nodemailer";
 
 import Contenedor from "../daos/productos/productosDaoFs.js";
 import ContenedorMongo from "../daos/productos/productosDaoMongo.js";
@@ -25,6 +26,44 @@ function middleware(peticion, respuesta, next) {
       .send({ error: -1, descripcion: "ruta no autorizada" });
   }
 }
+
+////////////////////// USANDO ACTUALMENETE ETHEREAL COMO PRUEBA
+
+const transporter = createTransport({
+  host: 'smtp.ethereal.email',
+  port: 587,
+  auth: {
+      user: 'jaydon57@ethereal.email',
+      pass: 'TzBtfNxE4PSK8pwgga'
+  }
+});
+
+const mailOptions={
+  from: 'Ecommerce Bentolila CoderHouse',
+  to: 'federicobentolila88@gmail.com',
+  subject:'Nuevo registro'
+}
+
+///////////////////PARA USAR GMAIL///////////////////////
+
+
+/* const transporter = createTransport({
+  service:'gmail',
+  port: 587,
+  auth: {
+      user:'XXXXXXXX@gmail.com',
+      pass:'XXXXXXXXXXXXX'
+  }
+});
+
+const mailOptions={
+  from: 'Ecommerce Bentolila CoderHouse',
+  to: 'federico_bentolila88@hotmail.com',
+  subject:'Nuevo registro'
+} */
+
+
+//////////////////////////////////////////////////
 
 const publicRoot = "./src/public";
 
@@ -51,6 +90,11 @@ rutaProducto.post("/register", (peticion, respuesta) => {
         respuesta.sendFile("registererror.html", { root: publicRoot });
       } else {
         passport.authenticate("local")(peticion, respuesta, () => {
+
+          mailOptions.html= `<h1>${peticion.user.username}</h1><h1>${peticion.user.email}</h1>
+          <h1>${peticion.user.telephone}</h1><h1>${peticion.user.adress}</h1>`
+          transporter.sendMail(mailOptions)
+
           respuesta.sendFile("login.html", { root: publicRoot });
         });
       }

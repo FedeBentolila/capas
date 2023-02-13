@@ -3,6 +3,8 @@ import ContenedorCarrito from "../daos/carrito/carritoDaoFs.js";
 import ContenedorProductos from "../daos/productos/productosDaoFs.js";
 import { ensureLoggedIn } from "connect-ensure-login";
 import { User } from "../config.js";
+import { createTransport } from "nodemailer";
+import twilio from 'twilio'
 
 import ContenedorCarritosMongo from "../daos/carrito/carritoDaoMongo.js";
 import ContenedorProductosMongo from "../daos/productos/productosDaoMongo.js";
@@ -31,7 +33,68 @@ let dateStr =
   ":" +
   ("00" + date.getSeconds()).slice(-2);
 
+//////////////////////////////////////////////////Ethereal
+  const transporter = createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'jaydon57@ethereal.email',
+        pass: 'TzBtfNxE4PSK8pwgga'
+    }
+  });
+  
+  const mailOptionsCompra={
+    from: 'Ecommerce Bentolila CoderHouse',
+    to: 'federicobentolila88@gmail.com',
+    subject:'Nueva compra'
+  }
+
+//////////////////////////////////////////////Twilio
+
+const accountSid='AC219ff6a83721255a7c97e6e9ad9007d6'
+const authToken='ec43538c557f7830a1c707733771fe4a'
+
+const client= twilio(accountSid,authToken)
+
+
+
+
+///////////////////////////////////////////////////////
+
 //Endpoints
+
+rutaCarrito.get("/comprar", async (peticion, respuesta) => {
+  let username = peticion.user.username
+
+  const res = await carritosdeMongo.getByUsernamecarritosmongo(username);
+  console.log(res[0].productos);
+
+  carritos.getByUsername(username).then((res) => {
+    mailOptionsCompra.html= `<h1>Comprador ${peticion.user.username}</h1>
+    <h1>Email:${peticion.user.email}</h1>
+    <h1>Telefono:${peticion.user.telephone}</h1>
+    <h1>Direccion:${peticion.user.adress}</h1>
+    <h1>Compra:${JSON.stringify(res.productos)}</h1>`
+    
+    
+    transporter.sendMail(mailOptionsCompra)
+
+    /* client.messages.create({
+      body:'Su orden fue recibida y se encuentra en proceso',
+      from:'+19793253183',
+      to: `+${peticion.user.telephone}`
+    }) */
+
+    client.messages.create({
+      body:'Nueva Compra',
+      from:'whatsapp:+14155238886',
+      to: `whatsapp:+5491132272346`
+    })
+
+
+    respuesta.json(res.productos);
+  });
+});
 
 rutaCarrito.get("/carritodeluser", async (peticion, respuesta) => {
   let username = peticion.user.username
@@ -62,7 +125,7 @@ rutaCarrito.post(
 
     let userabuscar= await carritos.getByUsername(peticion.user.username)
 
-    if (userabuscar!=null) {
+    if (userabuscar) {
 
       productos.getByID(peticion.body.id).then((res) => {
         carritos.getByUsername(peticion.user.username).then((res2) => {
