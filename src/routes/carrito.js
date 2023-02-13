@@ -79,11 +79,11 @@ rutaCarrito.get("/comprar", async (peticion, respuesta) => {
     
     transporter.sendMail(mailOptionsCompra)
 
-    /* client.messages.create({
+    client.messages.create({
       body:'Su orden fue recibida y se encuentra en proceso',
       from:'+19793253183',
       to: `+${peticion.user.telephone}`
-    }) */
+    }) 
 
     client.messages.create({
       body:'Nueva Compra',
