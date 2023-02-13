@@ -52,7 +52,7 @@ let dateStr =
 //////////////////////////////////////////////Twilio
 
 const accountSid='AC219ff6a83721255a7c97e6e9ad9007d6'
-const authToken='ec43538c557f7830a1c707733771fe4a'
+const authToken='449611c02b5ff8a46fa6d07e608adfc3'
 
 const client= twilio(accountSid,authToken)
 
@@ -79,20 +79,20 @@ rutaCarrito.get("/comprar", async (peticion, respuesta) => {
     
     transporter.sendMail(mailOptionsCompra)
 
-    client.messages.create({
+     client.messages.create({
       body:'Su orden fue recibida y se encuentra en proceso',
       from:'+19793253183',
       to: `+${peticion.user.telephone}`
-    }) 
+    })  
 
-    client.messages.create({
+     client.messages.create({
       body:'Nueva Compra',
       from:'whatsapp:+14155238886',
       to: `whatsapp:+5491132272346`
-    })
+    })  
 
 
-    respuesta.json(res.productos);
+    respuesta.sendFile("comprarealizada.html", { root: publicRoot });
   });
 });
 
