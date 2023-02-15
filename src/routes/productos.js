@@ -3,10 +3,11 @@ import { User } from "../config.js";
 import { ensureLoggedIn } from "connect-ensure-login";
 import passport from "passport";
 import { createTransport } from "nodemailer";
-
+import * as dotenv from "dotenv";
 import Contenedor from "../daos/productos/productosDaoFs.js";
 import ContenedorMongo from "../daos/productos/productosDaoMongo.js";
 
+dotenv.config()
 
 let productosdeMongo = new ContenedorMongo();
 

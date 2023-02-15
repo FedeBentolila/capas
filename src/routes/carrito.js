@@ -5,9 +5,12 @@ import { ensureLoggedIn } from "connect-ensure-login";
 import { User } from "../config.js";
 import { createTransport } from "nodemailer";
 import twilio from 'twilio'
+import * as dotenv from "dotenv";
 
 import ContenedorCarritosMongo from "../daos/carrito/carritoDaoMongo.js";
 import ContenedorProductosMongo from "../daos/productos/productosDaoMongo.js";
+
+dotenv.config()
 
 const rutaCarrito = express.Router();
 
@@ -51,8 +54,8 @@ let dateStr =
 
 //////////////////////////////////////////////Twilio
 
-const accountSid='AC219ff6a83721255a7c97e6e9ad9007d6'
-const authToken='449611c02b5ff8a46fa6d07e608adfc3'
+const accountSid= process.env.CLAVETWILIOSID
+const authToken=process.env.CLAVETWILIOTOKEN
 
 const client= twilio(accountSid,authToken)
 
