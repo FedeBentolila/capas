@@ -360,5 +360,96 @@
     "username": "toto",
     "id": 12,
     "timestamp": "14/02/2023 22:15:10"
+  },
+  {
+    "productos": [
+      {
+        "title": "lapiz",
+        "description": "lapiz negro",
+        "price": "100",
+        "code": "35",
+        "stock": "10",
+        "thumbnail": "https://gerady.com.ar/wp-content/uploads/2019/06/LA49136.jpg",
+        "id": 1,
+        "timestamp": "14/12/2022 00:34:51"
+      },
+      {
+        "title": "carpeta",
+        "description": "carpeta estudio",
+        "price": "200",
+        "code": "25",
+        "stock": "10",
+        "thumbnail": "https://www.congresoinsumos.com.ar/productos/C2505.jpg",
+        "id": 2,
+        "timestamp": "14/12/2022 00:34:51"
+      },
+      {
+        "title": "lapiz",
+        "description": "lapiz negro",
+        "price": "100",
+        "code": "35",
+        "stock": "10",
+        "thumbnail": "https://gerady.com.ar/wp-content/uploads/2019/06/LA49136.jpg",
+        "id": 1,
+        "timestamp": "14/12/2022 00:34:51"
+      }
+    ],
+    "username": "VilmaOs",
+    "id": 13,
+    "timestamp": "18/02/2023 16:32:58"
+  },
+  {
+    "productos": [
+      {
+        "title": "lapiz",
+        "description": "lapiz negro",
+        "price": "100",
+        "code": "35",
+        "stock": "10",
+        "thumbnail": "https://gerady.com.ar/wp-content/uploads/2019/06/LA49136.jpg",
+        "id": 1,
+        "timestamp": "14/12/2022 00:34:51"
+      },
+      {
+        "title": "carpeta",
+        "description": "carpeta estudio",
+        "price": "200",
+        "code": "25",
+        "stock": "10",
+        "thumbnail": "https://www.congresoinsumos.com.ar/productos/C2505.jpg",
+        "id": 2,
+        "timestamp": "14/12/2022 00:34:51"
+      }
+    ],
+    "username": "Ernest",
+    "id": 14,
+    "timestamp": "21/02/2023 19:48:11"
+  },
+  {
+    "productos": [
+      {
+        "title": "lapiz",
+        "description": "lapiz negro",
+        "price": "100",
+        "code": "35",
+        "stock": "10",
+        "thumbnail": "https://gerady.com.ar/wp-content/uploads/2019/06/LA49136.jpg",
+        "id": 1,
+        "timestamp": "14/12/2022 00:34:51"
+      },
+      {
+        "title": "carpeta",
+        "description": "carpeta estudio",
+        "price": "200",
+        "code": "25",
+        "stock": "10",
+        "thumbnail": "https://www.congresoinsumos.com.ar/productos/C2505.jpg",
+        "id": 2,
+        "timestamp": "14/12/2022 00:34:51"
+      }
+    ],
+    "username": "fedeb",
+    "id": 15,
+    "timestamp": "21/02/2023 21:12:02"
   }
 ]

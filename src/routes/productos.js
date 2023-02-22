@@ -6,6 +6,7 @@ import { createTransport } from "nodemailer";
 import * as dotenv from "dotenv";
 import Contenedor from "../daos/productos/productosDaoFs.js";
 import ContenedorMongo from "../daos/productos/productosDaoMongo.js";
+import { register, registerpost, login, logout, home, usuario, user, homepost, administrador, productosall, productosid, productospost, productosput, productosdelete } from "./productoscontroller.js";
 
 dotenv.config()
 
@@ -70,167 +71,53 @@ const publicRoot = "./src/public";
 
 //Endpoints
 
-rutaProducto.get("/register", (peticion, respuesta) => {
-  respuesta.sendFile("register.html", { root: publicRoot });
-});
+rutaProducto.get("/register", register);
 
-rutaProducto.post("/register", (peticion, respuesta) => {
-  User.register(
-    new User(
-      { username: peticion.body.username, 
-        telephone:peticion.body.telephone,
-        email:peticion.body.email,
-        age:peticion.body.age,
-        adress:peticion.body.adress,
-        photo:peticion.body.photo
-      }),
-    peticion.body.password,
-    (err, user) => {
-      if (err) {
-        console.log(err);
-        respuesta.sendFile("registererror.html", { root: publicRoot });
-      } else {
-        passport.authenticate("local")(peticion, respuesta, () => {
+rutaProducto.post("/register", registerpost);
 
-          mailOptions.html= `<h1>${peticion.user.username}</h1><h1>${peticion.user.email}</h1>
-          <h1>${peticion.user.telephone}</h1><h1>${peticion.user.adress}</h1>`
-          transporter.sendMail(mailOptions)
+rutaProducto.get("/login", login);
 
-          respuesta.sendFile("login.html", { root: publicRoot });
-        });
-      }
-    }
-  );
-});
-
-rutaProducto.get("/login", (peticion, respuesta) => {
-  respuesta.sendFile("login.html", { root: publicRoot });
-});
-
-rutaProducto.get("/logout", (peticion, respuesta) => {
-  peticion.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    respuesta.sendFile("logout.html", { root: publicRoot });
-  });
-});
+rutaProducto.get("/logout", logout);
 
 rutaProducto.get("/loginerror", (peticion, respuesta) => {
   respuesta.sendFile("loginerror.html", { root: publicRoot });
 });
 
-
-
 rutaProducto.get(
   "/",
   ensureLoggedIn("/loginerror"),
-  (peticion, respuesta) => {
-    let nombre = peticion.user.username;
-    respuesta.sendFile("inicioconproductos.html", { root: publicRoot });
-  }
+  home
 );
 
 rutaProducto.get(
   "/usuario",
   ensureLoggedIn("/loginerror"),
-  (peticion, respuesta) => {
-    respuesta.sendFile("usuario.html", { root: publicRoot });
-  }
+  usuario
 );
 
 rutaProducto.get(
   "/user",
   ensureLoggedIn("/loginerror"),
-  (peticion, respuesta) => {
-      /* let username = peticion.user.username; */
-      let usuario= [
-        {username: peticion.user.username,
-        telephone :peticion.user.telephone,
-         email: peticion.user.email,
-         adress: peticion.user.adress,
-         photo :peticion.user.photo
-        }
-      ]
-    respuesta.json(usuario)
-  }
+ user
 );
 
 rutaProducto.post(
   "/",
   passport.authenticate("local", { failureRedirect: "/loginerror" }),
-  function (peticion, respuesta) {
-    let nombre = peticion.user.username;
-    respuesta.sendFile("inicioconproductos.html", { root: publicRoot });
-  }
+  homepost
 );
 
 
-rutaProducto.get("/administrador",middleware, (peticion, respuesta) => {
-  respuesta.render("formulario", {});
-});
+rutaProducto.get("/administrador",middleware, administrador);
 
-rutaProducto.get("/productos", (peticion, respuesta) => {
-  productosdeMongo.getAllmongo().then((res) => {
-    //console.log(res);
-    //respuesta.json(res)
-  });
+rutaProducto.get("/productos", productosall);
 
-  productos.getAll().then((res) => {
-    respuesta.json(res);
-  });
+rutaProducto.get("/productos/:id", productosid);
 
-});
+rutaProducto.post("/productos", middleware, productospost);
 
-rutaProducto.get("/productos/:id", (peticion, respuesta) => {
-  const id = parseInt(peticion.params.id);
+rutaProducto.put("/productos/:id", middleware, productosput);
 
-  productosdeMongo.getByIDmongo(id).then((res) => {
-    console.log(res);
-    //respuesta.json(res)
-  });
-
-  productos.getByID(id).then((res) => {
-    respuesta.json(res);
-  });
-
-});
-
-rutaProducto.post("/productos", middleware, (peticion, respuesta) => {
-  const producto = peticion.body;
-
-  productosdeMongo.saveMongo(producto).then(() => {
-    // respuesta.render("formulario", {});
-  });
-
-  productos.Save(producto).then(() => {
-    respuesta.render("formulario", {});
-  });
-
-});
-
-rutaProducto.put("/productos/:id", middleware, async (peticion, respuesta) => {
-  const idProducto = parseInt(peticion.params.id);
-  const producto = peticion.body;
-
-  await productos.update(idProducto, producto);
-
-  productosdeMongo.updateMongo(idProducto, producto);
-
-  respuesta.send("ok");
-});
-
-rutaProducto.delete("/productos/:id", middleware, (peticion, respuesta) => {
-  const id = parseInt(peticion.params.id);
-
-  productosdeMongo.deletemongo(id).then(() => {
-    //respuesta.json("producto eliminado");
-  });
-
-  productos.deleteById(id).then((res) => {
-    respuesta.json("producto eliminado");
-  });
-
-});
+rutaProducto.delete("/productos/:id", middleware, productosdelete);
 
 export { rutaProducto };
