@@ -12,6 +12,7 @@ import { ConexionMongo } from "./config.js";
 import  log4js  from "log4js";
 import os from 'os';
 import cluster from 'cluster';
+import { ejecutarCmds } from "./routes/productoscontrollerCMD.js";
 
 const numProcesadores = os.cpus().length;
 
@@ -108,6 +109,8 @@ aplicacion.all('*', (req, res) => {
   loggerWarn.warn(`${req.method} ${req.url}`)
   res.status(404).send("No existe esa ruta");
 });
+
+ejecutarCmds()
 
 }
 
