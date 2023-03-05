@@ -6,7 +6,7 @@ import { createTransport } from "nodemailer";
 import * as dotenv from "dotenv";
 import Contenedor from "../daos/productos/productosDaoFs.js";
 import ContenedorMongo from "../daos/productos/productosDaoMongo.js";
-import { register, registerpost, login, logout, home, usuario, user, homepost, administrador, productosall, productosid, productospost, productosput, productosdelete } from "./productoscontroller.js";
+import { register, registerpost, login, logout, home, usuario, user, homepost, administrador, productosall, productosid, productospost, productosput, productosdelete } from "../controllers/productoscontroller.js"
 
 dotenv.config()
 

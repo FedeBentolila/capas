@@ -9,7 +9,7 @@ import * as dotenv from "dotenv";
 
 import ContenedorCarritosMongo from "../daos/carrito/carritoDaoMongo.js";
 import ContenedorProductosMongo from "../daos/productos/productosDaoMongo.js";
-import { agregarproducto, carrito, carritoidprodid, carritoidproductos, carritopost, cart, comprar, deletecarritoidprodid } from "./carritocontroller.js";
+import { agregarproducto, carrito, carritoidprodid, carritoidproductos, carritopost, cart, comprar, deletecarritoidprodid } from "../controllers/carritocontroller.js";
 
 dotenv.config()
 

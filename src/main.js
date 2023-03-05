@@ -12,7 +12,7 @@ import { ConexionMongo } from "./config.js";
 import  log4js  from "log4js";
 import os from 'os';
 import cluster from 'cluster';
-import { ejecutarCmds } from "./routes/productoscontrollerCMD.js";
+import { ejecutarCmds } from "./controllers/productoscontrollerCMD.js";
 
 const numProcesadores = os.cpus().length;
 

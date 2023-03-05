@@ -7,6 +7,7 @@ import * as dotenv from "dotenv";
 import Contenedor from "../daos/productos/productosDaoFs.js";
 import ContenedorMongo from "../daos/productos/productosDaoMongo.js";
 
+
 dotenv.config()
 
 let productosdeMongo = new ContenedorMongo();
@@ -73,6 +74,7 @@ async function register(peticion, respuesta){
 }
 
 async function registerpost(peticion, respuesta){
+    
     User.register(
         new User(
           { username: peticion.body.username, 
@@ -98,7 +100,7 @@ async function registerpost(peticion, respuesta){
             });
           }
         }
-      )
+      ) 
 }
 
 async function login(peticion, respuesta){
