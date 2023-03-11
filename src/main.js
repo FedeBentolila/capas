@@ -13,6 +13,7 @@ import  log4js  from "log4js";
 import os from 'os';
 import cluster from 'cluster';
 import { ejecutarCmds } from "./controllers/productoscontrollerCMD.js";
+import { axiosTest } from "./test/clienteAxios.js";
 
 const numProcesadores = os.cpus().length;
 
@@ -53,6 +54,7 @@ if (cluster.isPrimary && process.argv[3]=='CLUSTER') {
   ConexionMongo();
 
 const aplicacion = express();
+
 
 const PORT = process.argv[2] || 8080;
 
@@ -112,7 +114,12 @@ aplicacion.all('*', (req, res) => {
 
 ejecutarCmds()
 
+//axiosTest()
+
+
 }
+
+
 
 
 

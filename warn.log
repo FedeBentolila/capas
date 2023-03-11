@@ -9,3 +9,6 @@
 [2023-03-04T10:46:13.500] [WARN] warning - GET /favicon.ico
 [2023-03-04T10:46:51.675] [WARN] warning - GET /api/productos
 [2023-03-04T23:11:32.499] [WARN] warning - GET /favicon.ico
+[2023-03-11T09:00:50.748] [WARN] warning - GET /favicon.ico
+[2023-03-11T09:22:31.367] [WARN] warning - DELETE /productos?id=3
+[2023-03-11T09:24:45.471] [WARN] warning - DELETE /productos?id=3
