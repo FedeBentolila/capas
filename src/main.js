@@ -1,4 +1,6 @@
 import express from "express";
+import { graphqlHTTP } from "express-graphql";
+import { buildSchema } from "graphql";
 import bodyParser from "body-parser";
 import session from "express-session";
 import passport from "passport";
@@ -14,6 +16,7 @@ import os from 'os';
 import cluster from 'cluster';
 import { ejecutarCmds } from "./controllers/productoscontrollerCMD.js";
 import { axiosTest } from "./test/clienteAxios.js";
+import { getProducto, getProductos, createProducto, deleteProducto, updateProducto } from "./controllers/graphqlcontroller.js";
 
 const numProcesadores = os.cpus().length;
 
@@ -95,6 +98,58 @@ aplicacion.use(express.static(publicRoot));
 
 aplicacion.use("/", rutaProducto);
 aplicacion.use("/", rutaCarrito);
+
+
+////////////////////////Graphql
+
+
+const schema= buildSchema(
+  `
+  type producto{
+    title: String,
+    description: String,
+    price: String,
+    code: String,
+    stock: String,
+    thumbnail: String,
+    id: Int,
+    timestamp: String
+  }
+  input productoInput{
+    title: String,
+    description: String,
+    price: String,
+    code: String,
+    stock: String,
+    thumbnail: String
+  }
+  type Query{
+    getProducto(id:Int): producto,
+    getProductos: [producto],
+  }
+  type Mutation{
+    createProducto(datos:productoInput): producto,
+    deleteProducto(id:Int): producto,
+    updateProducto(id:Int, datos:productoInput): producto,
+  }
+  `
+)
+
+aplicacion.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue:{
+    getProducto,
+    getProductos,
+    createProducto,
+    deleteProducto,
+    updateProducto
+  },
+  graphiql: true,
+}))
+
+
+
+/////////////////////////////////////
 
 
 const conexionServidor = aplicacion.listen(PORT, () => {
