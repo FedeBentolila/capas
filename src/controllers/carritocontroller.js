@@ -41,8 +41,8 @@ let dateStr =
     host: 'smtp.ethereal.email',
     port: 587,
     auth: {
-        user: 'jaydon57@ethereal.email',
-        pass: 'TzBtfNxE4PSK8pwgga'
+        user: 'delores7@ethereal.email',
+        pass: process.env.CLAVEETHERAL
     }
   });
   
